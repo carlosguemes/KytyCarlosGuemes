@@ -5,24 +5,36 @@ class RegisterView extends StatelessWidget{
 
   late BuildContext _context;
 
-  Future<void> onClickAceptarRegistrar() async {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController repasswordController = TextEditingController();
 
-    try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: "carlosguemesdam@gmail.com",
-        password: "1234567890",
-      );
+  SnackBar snackBar = SnackBar(
+    content: Text('Las contraseñas han de ser iguales'),
+  );
 
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+  void onClickAceptarRegistrar() async {
+    //print("DEBUG -> " + usernameController.text);
+    if (passwordController.text == repasswordController.text) {
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: usernameController.text,
+          password: passwordController.text,
+        );
+        Navigator.of(_context).popAndPushNamed('/loginview');
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
       }
-    } catch (e) {
-      print(e);
     }
-
+    else{
+      ScaffoldMessenger.of(_context).showSnackBar(snackBar);
+    }
   }
 
   void onClickCancelarRegistrar(){
@@ -44,6 +56,7 @@ class RegisterView extends StatelessWidget{
       Padding(
         padding:EdgeInsets.symmetric(horizontal: 500, vertical: 5),
         child: TextField(
+          controller: usernameController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Input User',
@@ -53,7 +66,8 @@ class RegisterView extends StatelessWidget{
 
       Padding(
         padding:EdgeInsets.symmetric(horizontal: 500, vertical: 5),
-        child: TextField(
+        child: TextFormField(
+          controller: passwordController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Input Password',
@@ -64,7 +78,8 @@ class RegisterView extends StatelessWidget{
 
       Padding(
         padding:EdgeInsets.symmetric(horizontal: 500, vertical: 5),
-        child: TextField(
+        child: TextFormField(
+          controller: repasswordController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Repite Password',
