@@ -7,8 +7,7 @@ import '../firebase_options.dart';
 void main() {
   initFB();
 
-  KytyApp kytyApp = KytyApp();
-  runApp(kytyApp);
+  runApp(KytyApp());
 }
 
 void initFB() async{
