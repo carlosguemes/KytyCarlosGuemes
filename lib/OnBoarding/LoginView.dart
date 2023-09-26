@@ -40,7 +40,7 @@ class LoginView extends StatelessWidget{
       Text("Bienvenido a Kyty Login", style: TextStyle(fontSize: 25)),
       Padding(
         padding:EdgeInsets.symmetric(horizontal: Checkbox.width, vertical: 16),
-        child: Flexible (child: TextField(
+        child: Flexible (child: SizedBox(width: 400, child: TextField(
           controller: tecUsername,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
@@ -48,19 +48,24 @@ class LoginView extends StatelessWidget{
           ),
         ),
         ),
+        ),
       ),
 
       Padding(
-          padding:EdgeInsets.symmetric(horizontal: Checkbox.width, vertical: 0),
-          child: Flexible(child: TextFormField(
-            controller: tecPassword,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Input Password',
+        padding:EdgeInsets.symmetric(horizontal: Checkbox.width, vertical: 0),
+        child: Flexible(
+          child: SizedBox (child: SizedBox(width: 400,
+            child: TextFormField(
+              controller: tecPassword,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Input Password',
+              ),
+              obscureText: true,
             ),
-            obscureText: true,
-          ),
           )
+          ),
+        ),
       ),
 
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
