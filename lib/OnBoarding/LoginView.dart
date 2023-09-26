@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget{
 
+
+
   late BuildContext _context;
 
   TextEditingController tecUsername = TextEditingController();
@@ -11,8 +13,8 @@ class LoginView extends StatelessWidget{
   void onClickAceptarLogin() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: tecUsername.text,
-          password: tecPassword.text,
+        email: tecUsername.text,
+        password: tecPassword.text,
       );
       Navigator.of(_context).popAndPushNamed('/homeview');
     } on FirebaseAuthException catch (e) {
@@ -37,31 +39,33 @@ class LoginView extends StatelessWidget{
       Padding(padding: EdgeInsets.symmetric(vertical: 10)),
       Text("Bienvenido a Kyty Login", style: TextStyle(fontSize: 25)),
       Padding(
-        padding:EdgeInsets.symmetric(horizontal: 500, vertical: 16),
-          child: TextField(
-            controller: tecUsername,
-            decoration: InputDecoration(
+        padding:EdgeInsets.symmetric(horizontal: Checkbox.width, vertical: 16),
+        child: Flexible (child: TextField(
+          controller: tecUsername,
+          decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Input User',
           ),
         ),
+        ),
       ),
 
       Padding(
-        padding:EdgeInsets.symmetric(horizontal: 500, vertical: 0),
-        child: TextFormField(
-          controller: tecPassword,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Input Password',
+          padding:EdgeInsets.symmetric(horizontal: Checkbox.width, vertical: 0),
+          child: Flexible(child: TextFormField(
+            controller: tecPassword,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Input Password',
+            ),
+            obscureText: true,
           ),
-          obscureText: true,
-        ),
+          )
       ),
 
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Padding(padding: EdgeInsets.symmetric(vertical: 10),
-            child: TextButton(onPressed: onClickAceptarLogin, child: Text("Aceptar")),),
+          child: TextButton(onPressed: onClickAceptarLogin, child: Text("Aceptar")),),
 
         Padding(padding: EdgeInsets.symmetric(vertical: 10),
           child: TextButton(onPressed: onClickRegistrar,
