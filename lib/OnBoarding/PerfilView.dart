@@ -21,7 +21,7 @@ class PerfilView extends StatelessWidget{
     //Crear documento con ID auto generado
     //db.collection("/Usuarios").add(usuario);
 
-    //Crear ID con un ID nuestro
+    //Crear documento con un ID nuestro
     db.collection("/Usuarios").doc(uidUsuario).set(usuario);
   }
 
