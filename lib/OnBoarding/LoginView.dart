@@ -2,9 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget{
-
-
-
+  
   late BuildContext _context;
 
   TextEditingController tecUsername = TextEditingController();
@@ -44,7 +42,8 @@ class LoginView extends StatelessWidget{
           controller: tecUsername,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            hintText: 'Input User',
+            //hintText: 'Input User',
+            labelText: 'Input User',
           ),
         ),
         ),
@@ -59,7 +58,10 @@ class LoginView extends StatelessWidget{
               controller: tecPassword,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Input Password',
+                //hintText: 'Input Password',
+                labelText: 'Input Password',
+                fillColor: Colors.greenAccent,
+                filled: true,
               ),
               obscureText: true,
             ),
