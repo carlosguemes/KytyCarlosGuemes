@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -8,13 +9,28 @@ class LoginView extends StatelessWidget{
   TextEditingController tecUsername = TextEditingController();
   TextEditingController tecPassword = TextEditingController();
 
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
   void onClickAceptarLogin() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: tecUsername.text,
         password: tecPassword.text,
       );
-      Navigator.of(_context).popAndPushNamed('/homeview');
+
+      String uidUsuario = FirebaseAuth.instance.currentUser!.uid;
+      DocumentSnapshot<Map<String, dynamic>> datos = await db.collection("Usuarios").doc(uidUsuario).get();
+
+      if (datos.exists) {
+        print(datos.data()?["Nombre"] + " ya está conectado manines");
+        print(datos.data()?["Edad"] + " años tiene este manín");
+        Navigator.of(_context).popAndPushNamed("/homeview");
+      }
+
+      else{
+        Navigator.of(_context).popAndPushNamed('/perfilview');
+      }
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');

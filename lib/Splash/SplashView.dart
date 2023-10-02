@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kyty/FirestoreObjects/FbUsuario.dart';
 
 class SplashView extends StatefulWidget {
   @override
@@ -26,10 +27,21 @@ class _SplashViewState extends State<SplashView>{
 
     if (FirebaseAuth.instance.currentUser != null) {
       String uidUsuario = FirebaseAuth.instance.currentUser!.uid;
-      DocumentSnapshot<Map<String, dynamic>> datos = await db.collection("Usuarios").doc(uidUsuario).get();
+      //DocumentSnapshot<Map<String, dynamic>> datos = await db.collection("Usuarios").doc(uidUsuario).get();
 
-      if (datos.exists) {
-        print(datos.data()?["Nombre"] + " ya está conectado manines");
+      DocumentReference<FbUsuario> reference = db
+          .collection("Usuarios")
+          .doc(uidUsuario)
+          .withConverter(fromFirestore: FbUsuario.fromFirestore,
+          toFirestore: (FbUsuario usuario, _) => usuario.toFirestore());
+
+      DocumentSnapshot<FbUsuario> docSnap = await reference.get();
+
+      FbUsuario usuario = docSnap.data()!;
+
+      if (usuario!=null) {
+        print(usuario.nombre + " ya está conectado manines");
+        print("Este manín tiene " + usuario.edad.toString());
         Navigator.of(context).popAndPushNamed("/homeview");
       }
 
