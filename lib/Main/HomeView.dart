@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget{
@@ -5,6 +6,7 @@ class HomeView extends StatelessWidget{
   late BuildContext _context;
 
   void onClickVolver(){
+    FirebaseAuth.instance.signOut();
     Navigator.of(_context).popAndPushNamed('/loginview');
   }
 

@@ -19,10 +19,12 @@ class PerfilView extends StatelessWidget{
     //UID del usuario que está logeado
     String uidUsuario = FirebaseAuth.instance.currentUser!.uid;
     //Crear documento con ID auto generado
-    //db.collection("/Usuarios").add(usuario);
+    //db.collection("Usuarios").add(usuario);
 
     //Crear documento con un ID nuestro
-    db.collection("/Usuarios").doc(uidUsuario).set(usuario);
+    db.collection("Usuarios").doc(uidUsuario).set(usuario);
+
+    Navigator.of(_context).popAndPushNamed('/homeview');
   }
 
   void onClickCancelar(){

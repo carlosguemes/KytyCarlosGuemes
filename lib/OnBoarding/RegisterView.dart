@@ -21,7 +21,7 @@ class RegisterView extends StatelessWidget{
           email: usernameController.text,
           password: passwordController.text,
         );
-        Navigator.of(_context).popAndPushNamed('/loginview');
+        Navigator.of(_context).popAndPushNamed('/perfilview');
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('The password provided is too weak.');
@@ -99,7 +99,7 @@ class RegisterView extends StatelessWidget{
     ],); //Columna
 
     AppBar appBar = AppBar(
-      title: const Text('Login'),
+      title: const Text('Registro'),
       centerTitle: true,
       shadowColor: Colors.blue,
       backgroundColor: Colors.black,
