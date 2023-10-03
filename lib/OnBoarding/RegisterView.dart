@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kyty/KTPaddingText/PaddingClass.dart';
 
 class RegisterView extends StatelessWidget{
 
@@ -53,38 +54,31 @@ class RegisterView extends StatelessWidget{
       Padding(padding: EdgeInsets.symmetric(vertical: 10)),
       Text('Bienvenido a Kyty Register', style: TextStyle(fontSize: 25)),
       Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-      Padding(
-        padding:EdgeInsets.symmetric(horizontal: 500, vertical: 5),
-        child: TextField(
-          controller: usernameController,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Input User',
-          ),
-        ),
+      PaddingClass(controlador: usernameController,
+          labelText: 'Input User',
+          esContrasenya: false
+      ),
+
+      PaddingClass(controlador: passwordController,
+          labelText: 'Input Password',
+          esContrasenya: true
       ),
 
       Padding(
-        padding:EdgeInsets.symmetric(horizontal: 500, vertical: 5),
-        child: TextFormField(
-          controller: passwordController,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Input Password',
+        padding:EdgeInsets.symmetric(horizontal: Checkbox.width, vertical: 5),
+        child: Flexible(
+          child: SizedBox(width: 400,
+            child: TextFormField(
+              controller: repasswordController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Repite Password',
+                fillColor: Colors.white,
+                filled: true,
+              ),
+              obscureText: true,
+            ),
           ),
-          obscureText: true,
-        ),
-      ),
-
-      Padding(
-        padding:EdgeInsets.symmetric(horizontal: 500, vertical: 5),
-        child: TextFormField(
-          controller: repasswordController,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Repite Password',
-          ),
-          obscureText: true,
         ),
       ),
 

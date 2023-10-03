@@ -90,10 +90,11 @@ class LoginView extends StatelessWidget{
 
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Padding(padding: EdgeInsets.symmetric(vertical: 10),
-          child: TextButton(onPressed: onClickAceptarLogin, child: Text("Aceptar")),),
+          child: TextButton(onPressed: onClickAceptarLogin, style: TextButton.styleFrom(foregroundColor: Colors.black),
+              child: Text("Aceptar")),),
 
         Padding(padding: EdgeInsets.symmetric(vertical: 10),
-          child: TextButton(onPressed: onClickRegistrar,
+          child: TextButton(onPressed: onClickRegistrar, style: TextButton.styleFrom(foregroundColor: Colors.black),
               child: Text("Registro")),)
       ],)
 
@@ -104,6 +105,7 @@ class LoginView extends StatelessWidget{
       centerTitle: true,
       shadowColor: Colors.blue,
       backgroundColor: Colors.black,
+      foregroundColor: Colors.cyanAccent,
     );
 
     Scaffold scaf = Scaffold(
