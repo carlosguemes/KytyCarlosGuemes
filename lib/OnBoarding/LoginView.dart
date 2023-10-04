@@ -1,15 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget{
-  
+
+
+
   late BuildContext _context;
 
   TextEditingController tecUsername = TextEditingController();
   TextEditingController tecPassword = TextEditingController();
-
-  FirebaseFirestore db = FirebaseFirestore.instance;
 
   void onClickAceptarLogin() async {
     try {
@@ -17,20 +16,7 @@ class LoginView extends StatelessWidget{
         email: tecUsername.text,
         password: tecPassword.text,
       );
-
-      String uidUsuario = FirebaseAuth.instance.currentUser!.uid;
-      DocumentSnapshot<Map<String, dynamic>> datos = await db.collection("Usuarios").doc(uidUsuario).get();
-
-      if (datos.exists) {
-        print(datos.data()?["Nombre"] + " ya está conectado manines");
-        print(datos.data()?["Edad"] + " años tiene este manín");
-        Navigator.of(_context).popAndPushNamed("/homeview");
-      }
-
-      else{
-        Navigator.of(_context).popAndPushNamed('/perfilview');
-      }
-
+      Navigator.of(_context).popAndPushNamed('/homeview');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -58,10 +44,7 @@ class LoginView extends StatelessWidget{
           controller: tecUsername,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            //hintText: 'Input User',
-            labelText: 'Input User',
-            fillColor: Colors.white,
-            filled: true,
+            hintText: 'Input User',
           ),
         ),
         ),
@@ -76,10 +59,7 @@ class LoginView extends StatelessWidget{
               controller: tecPassword,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                //hintText: 'Input Password',
-                labelText: 'Input Password',
-                fillColor: Colors.white,
-                filled: true,
+                hintText: 'Input Password',
               ),
               obscureText: true,
             ),
