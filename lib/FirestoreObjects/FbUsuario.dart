@@ -5,11 +5,13 @@ class FbUsuario{
   final String nombre;
   final int edad;
   final double altura;
+  final String colorPelo;
 
   FbUsuario({
     required this.nombre,
     required this.edad,
-    required this.altura
+    required this.altura,
+    required this.colorPelo
   });
 
   factory FbUsuario.fromFirestore(
@@ -21,6 +23,7 @@ class FbUsuario{
       nombre: data?['Nombre'],
       edad: data?['Edad'],
       altura: data?['Altura'],
+      colorPelo: data?['colorPelo']
     );
   }
 
@@ -29,6 +32,7 @@ class FbUsuario{
       if (nombre != null) "Nombre": nombre,
       if (edad != null) "Edad": edad,
       if (altura != null) "Altura": altura,
+      if (colorPelo != null) "colorPelo" : colorPelo,
     };
   }
 

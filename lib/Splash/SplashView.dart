@@ -36,12 +36,12 @@ class _SplashViewState extends State<SplashView>{
           toFirestore: (FbUsuario usuario, _) => usuario.toFirestore());
 
       DocumentSnapshot<FbUsuario> docSnap = await reference.get();
-
       FbUsuario usuario = docSnap.data()!;
 
       if (usuario!=null) {
-        print(usuario.nombre + " ya está conectado manines");
-        print("Este manín tiene " + usuario.edad.toString());
+        print("Nombre del usuario: " + usuario.nombre);
+        print("Edad del usuario: " + usuario.edad.toString());
+        print("Altura del usuario: " + usuario.altura.toString());
         Navigator.of(context).popAndPushNamed("/homeview");
       }
 

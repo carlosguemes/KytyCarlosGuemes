@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../FirestoreObjects/FbUsuario.dart';
+import '../KTPaddingText/PaddingClass.dart';
+
 class LoginView extends StatelessWidget{
   
   late BuildContext _context;
@@ -19,11 +22,21 @@ class LoginView extends StatelessWidget{
       );
 
       String uidUsuario = FirebaseAuth.instance.currentUser!.uid;
-      DocumentSnapshot<Map<String, dynamic>> datos = await db.collection("Usuarios").doc(uidUsuario).get();
 
-      if (datos.exists) {
-        print(datos.data()?["Nombre"] + " ya está conectado manines");
-        print(datos.data()?["Edad"] + " años tiene este manín");
+      DocumentReference<FbUsuario> reference = db
+          .collection("Usuarios")
+          .doc(uidUsuario)
+          .withConverter(fromFirestore: FbUsuario.fromFirestore,
+          toFirestore: (FbUsuario usuario, _) => usuario.toFirestore());
+
+      DocumentSnapshot<FbUsuario> docSnap = await reference.get();
+      FbUsuario usuario = docSnap.data()!;
+
+      if (usuario!=null) {
+        print("Nombre del usuario: " + usuario.nombre);
+        print("Edad del usuario: " + usuario.edad.toString());
+        print("Altura del usuario: " + usuario.altura.toString());
+        print("Color de pelo del usuario: " + usuario.colorPelo);
         Navigator.of(_context).popAndPushNamed("/homeview");
       }
 
@@ -52,40 +65,14 @@ class LoginView extends StatelessWidget{
     Column columna = Column(children: [
       Padding(padding: EdgeInsets.symmetric(vertical: 10)),
       Text("Bienvenido a Kyty Login", style: TextStyle(fontSize: 25)),
-      Padding(
-        padding:EdgeInsets.symmetric(horizontal: Checkbox.width, vertical: 16),
-        child: Flexible (child: SizedBox(width: 400, child: TextField(
-          controller: tecUsername,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            //hintText: 'Input User',
-            labelText: 'Input User',
-            fillColor: Colors.white,
-            filled: true,
-          ),
-        ),
-        ),
-        ),
+      PaddingClass(controlador: tecUsername,
+          labelText: 'Input User',
+          esContrasenya: false
       ),
 
-      Padding(
-        padding:EdgeInsets.symmetric(horizontal: Checkbox.width, vertical: 0),
-        child: Flexible(
-          child: SizedBox (child: SizedBox(width: 400,
-            child: TextFormField(
-              controller: tecPassword,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                //hintText: 'Input Password',
-                labelText: 'Input Password',
-                fillColor: Colors.white,
-                filled: true,
-              ),
-              obscureText: true,
-            ),
-          )
-          ),
-        ),
+      PaddingClass(controlador: tecPassword,
+          labelText: 'Input Password',
+          esContrasenya: true
       ),
 
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
