@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kyty/KTPaddingText/GridBuilderCell.dart';
 import 'package:kyty/KTPaddingText/PostCellView.dart';
 
 import '../FirestoreObjects/FbPost.dart';
@@ -55,17 +56,25 @@ class _HomeViewState extends State<HomeView> {
     return Divider(color: Colors.purpleAccent,);
   }
 
+  Widget creadorCeldas(BuildContext context, int index){
+    return GridBuilderCell(post: post);
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(title: Text("Kyty"),),
-      body: ListView.separated(
+      body: Center(
+        child:
+          creadorCeldas(context, post.length),
+      ),
+
+      /*ListView.separated(
         padding: EdgeInsets.all(80),
         itemCount: post.length,
         itemBuilder: creadorDeItemLista,
-        separatorBuilder: creadorDeSeparadorLista,
-      ),
-    );
+        separatorBuilder: creadorDeSeparadorLista,*/
+      );
   }
 }

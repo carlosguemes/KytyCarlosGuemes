@@ -30,14 +30,15 @@ class LoginView extends StatelessWidget{
           toFirestore: (FbUsuario usuario, _) => usuario.toFirestore());
 
       DocumentSnapshot<FbUsuario> docSnap = await reference.get();
-      FbUsuario usuario = docSnap.data()!;
-
-      if (usuario!=null) {
-        print("Nombre del usuario: " + usuario.nombre);
-        print("Edad del usuario: " + usuario.edad.toString());
-        print("Altura del usuario: " + usuario.altura.toString());
-        print("Color de pelo del usuario: " + usuario.colorPelo);
-        Navigator.of(_context).popAndPushNamed("/homeview");
+      if (docSnap.exists) {
+        FbUsuario usuario = docSnap.data()!;
+        if (usuario != null) {
+          print("Nombre del usuario: " + usuario.nombre);
+          print("Edad del usuario: " + usuario.edad.toString());
+          print("Altura del usuario: " + usuario.altura.toString());
+          print("Color de pelo del usuario: " + usuario.colorPelo);
+          Navigator.of(_context).popAndPushNamed("/homeview");
+        }
       }
 
       else{
