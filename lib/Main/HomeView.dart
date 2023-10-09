@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kyty/Interfaces/BottomMenuEvents.dart';
+import 'package:kyty/KTPaddingText/BottomMenu.dart';
 import 'package:kyty/KTPaddingText/GridBuilderCell.dart';
 import 'package:kyty/KTPaddingText/PostCellView.dart';
 
@@ -12,8 +14,19 @@ class HomeView extends StatefulWidget{
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
-  late BuildContext _context;
+class _HomeViewState extends State<HomeView> implements BottomMenuEvents{
+  bool bIsList = false;
+  @override
+  void onBottomMenuPressed(int indice) {
+    setState(() {
+      if (indice == 0){
+        bIsList = true;
+      }
+      else if (indice == 1){
+        bIsList = false;
+      }
+    });
+  }
 
   FirebaseFirestore db = FirebaseFirestore.instance;
   final List<FbPost> post = [];
@@ -53,12 +66,31 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget creadorDeSeparadorLista(BuildContext context, int index){
-    return Divider(color: Colors.purpleAccent,);
+    return Divider(color: Colors.purpleAccent);
   }
 
   Widget creadorCeldas(BuildContext context, int index){
     return GridBuilderCell(post: post);
   }
+
+  /*
+  Widget celdasOLista(bool isList) {
+    if (isList) {
+      return ListView.separated(
+          padding: EdgeInsets.all(8),
+          itemCount: posts.length,
+          itemBuilder: creadorDeItemLista,
+          separatorBuilder: creadorDeSeparadorLista,
+        );
+    } else {
+      return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
+            itemCount: posts.length,
+            itemBuilder: creadorDeItemMatriz
+        );
+    }
+  }
+   */
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +101,7 @@ class _HomeViewState extends State<HomeView> {
         child:
           creadorCeldas(context, post.length),
       ),
+      bottomNavigationBar: BottomMenu(events: this),
 
       /*ListView.separated(
         padding: EdgeInsets.all(80),
@@ -77,4 +110,6 @@ class _HomeViewState extends State<HomeView> {
         separatorBuilder: creadorDeSeparadorLista,*/
       );
   }
+
+
 }

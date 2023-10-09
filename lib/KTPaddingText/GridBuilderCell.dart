@@ -14,7 +14,7 @@ class GridBuilderCell extends StatelessWidget{
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3, // number of items in each row
+        crossAxisCount: 4, // number of items in each row
         mainAxisSpacing: 8.0, // spacing between rows
         crossAxisSpacing: 8.0, // spacing between columns
       ),
