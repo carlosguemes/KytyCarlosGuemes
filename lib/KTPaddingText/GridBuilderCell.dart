@@ -22,7 +22,7 @@ class GridBuilderCell extends StatelessWidget{
       itemCount: post.length, // total number of items
       itemBuilder: (context, index) {
         return Container(
-          color: Colors.blue, // color of grid items
+          color: Colors.lightGreen, // color of grid items
           child: Center(
             child: Text(
               post[index].titulo,
