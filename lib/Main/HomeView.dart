@@ -14,9 +14,8 @@ class HomeView extends StatefulWidget{
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> implements BottomMenuEvents{
+class _HomeViewState extends State<HomeView>{
   bool bIsList = false;
-  @override
   void onBottomMenuPressed(int indice) {
     setState(() {
       if (indice == 0){
@@ -101,7 +100,7 @@ class _HomeViewState extends State<HomeView> implements BottomMenuEvents{
         child:
           creadorCeldas(context, post.length),
       ),
-      bottomNavigationBar: BottomMenu(events: this),
+      bottomNavigationBar: BottomMenu(events: onBottomMenuPressed),
 
       /*ListView.separated(
         padding: EdgeInsets.all(80),
