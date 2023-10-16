@@ -53,10 +53,10 @@ class _HomeViewState extends State<HomeView>{
     //FbPost post = docSnap.data()!;
   }
 
-  final List<String> posts = <String>['A', 'B', 'C'];
+  /*final List<String> posts = <String>['A', 'B', 'C'];
   final List<int> colorCodes = <int>[600, 500, 200];
   final List<double> fontSize = <double>[30, 15, 70];
-  final List<MaterialColor> colores = <MaterialColor>[Colors.green, Colors.amber, Colors.red];
+  final List<MaterialColor> colores = <MaterialColor>[Colors.green, Colors.amber, Colors.red];*/
 
   Widget? creadorDeItemLista(BuildContext context, int index){
     return PostCellView(sText: post[index].titulo,
@@ -72,24 +72,24 @@ class _HomeViewState extends State<HomeView>{
     return GridBuilderCell(post: post);
   }
 
-  /*
+  
   Widget celdasOLista(bool isList) {
     if (isList) {
       return ListView.separated(
           padding: EdgeInsets.all(8),
-          itemCount: posts.length,
+          itemCount: post.length,
           itemBuilder: creadorDeItemLista,
           separatorBuilder: creadorDeSeparadorLista,
         );
     } else {
-      return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
-            itemCount: posts.length,
-            itemBuilder: creadorDeItemMatriz
-        );
+      return /*GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+            itemCount: post.length,
+            itemBuilder: creadorCeldas*/
+      creadorCeldas(context, post.length);
     }
   }
-   */
+
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class _HomeViewState extends State<HomeView>{
       appBar: AppBar(title: Text("Kyty"),),
       body: Center(
         child:
-          creadorCeldas(context, post.length),
+          celdasOLista(bIsList),
       ),
       bottomNavigationBar: BottomMenu(events: onBottomMenuPressed),
 
