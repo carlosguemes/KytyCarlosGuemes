@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kyty/Interfaces/BottomMenuEvents.dart';
 import 'package:kyty/KTPaddingText/BottomMenu.dart';
+import 'package:kyty/KTPaddingText/DrawerClass.dart';
 import 'package:kyty/KTPaddingText/GridBuilderCell.dart';
 import 'package:kyty/KTPaddingText/PostCellView.dart';
 
@@ -97,10 +98,11 @@ class _HomeViewState extends State<HomeView>{
     return Scaffold(
       appBar: AppBar(title: Text("Kyty"),),
       body: Center(
-        child:
-          celdasOLista(bIsList),
+        child: celdasOLista(bIsList),
       ),
       bottomNavigationBar: BottomMenu(events: onBottomMenuPressed),
+
+      drawer: DrawerClass()
 
       /*ListView.separated(
         padding: EdgeInsets.all(80),
