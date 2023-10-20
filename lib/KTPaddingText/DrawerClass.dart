@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DrawerClass extends StatelessWidget{
+
+  Function (int indice)? onItemTap;
+  DrawerClass({Key? key, required this.onItemTap}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -17,14 +22,20 @@ class DrawerClass extends StatelessWidget{
             ),
           ),
           ListTile(
+            leading: Image.asset('resources/logo_kyty.png'),
             selectedColor: Colors.blue,
             selected: true,
             title: const Text('Apartado 1'),
-            onTap: () {},
+            onTap: () {
+              onItemTap!(0);
+            },
           ),
           ListTile(
+            leading: Icon(Icons.ad_units),
             title: const Text('Apartado 2'),
-            onTap: () {},
+            onTap: () {
+              onItemTap!(1);
+            },
           ),
         ],
       ),

@@ -3,13 +3,10 @@ import 'package:kyty/Interfaces/BottomMenuEvents.dart';
 
 class BottomMenu extends StatelessWidget {
   Function (int indice)? events;
-
   BottomMenu({Key? key, required this.events}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    //throw UnimplementedError();
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -18,21 +15,5 @@ class BottomMenu extends StatelessWidget {
           IconButton(onPressed: () => events!(2), icon: Image.asset("resources/logo_kyty.png"))
         ]
     );
-  }
-
-  void boton1Pressed(){
-    botonesClick(0);
-  }
-
-  void boton2Pressed(){
-    botonesClick(1);
-  }
-
-  void boton3Pressed(){
-    botonesClick(2);
-  }
-
-  void botonesClick(int indice){
-    print(indice.toString());
   }
 }

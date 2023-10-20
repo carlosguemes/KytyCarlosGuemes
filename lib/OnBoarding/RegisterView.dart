@@ -93,7 +93,7 @@ class RegisterView extends StatelessWidget{
     ],); //Columna
 
     AppBar appBar = AppBar(
-      title: const Text('Login'),
+      title: const Text('Register'),
       centerTitle: true,
       shadowColor: Colors.blue,
       backgroundColor: Colors.black,

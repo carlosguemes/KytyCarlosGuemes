@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kyty/Interfaces/BottomMenuEvents.dart';
 import 'package:kyty/KTPaddingText/BottomMenu.dart';
 import 'package:kyty/KTPaddingText/DrawerClass.dart';
 import 'package:kyty/KTPaddingText/GridBuilderCell.dart';
 import 'package:kyty/KTPaddingText/PostCellView.dart';
 
 import '../FirestoreObjects/FbPost.dart';
+import '../OnBoarding/LoginView.dart';
 
 class HomeView extends StatefulWidget{
 
@@ -27,6 +27,19 @@ class _HomeViewState extends State<HomeView>{
       }
     });
   }
+
+  void eventoDrawerClass(int indice){
+    if (indice == 0){
+      FirebaseAuth.instance.signOut();
+      //Navigator.of(context).pop();
+      //Navigator.of(context).popAndPushNamed('/loginview');
+      Navigator.of(context).pushAndRemoveUntil (
+        MaterialPageRoute (builder: (BuildContext context) => LoginView()),
+        ModalRoute.withName('/loginview'),
+      );
+    }
+  }
+
 
   FirebaseFirestore db = FirebaseFirestore.instance;
   final List<FbPost> post = [];
@@ -50,14 +63,7 @@ class _HomeViewState extends State<HomeView>{
       });
 
     }
-
-    //FbPost post = docSnap.data()!;
   }
-
-  /*final List<String> posts = <String>['A', 'B', 'C'];
-  final List<int> colorCodes = <int>[600, 500, 200];
-  final List<double> fontSize = <double>[30, 15, 70];
-  final List<MaterialColor> colores = <MaterialColor>[Colors.green, Colors.amber, Colors.red];*/
 
   Widget? creadorDeItemLista(BuildContext context, int index){
     return PostCellView(sText: post[index].titulo,
@@ -102,7 +108,7 @@ class _HomeViewState extends State<HomeView>{
       ),
       bottomNavigationBar: BottomMenu(events: onBottomMenuPressed),
 
-      drawer: DrawerClass()
+      drawer: DrawerClass(onItemTap: eventoDrawerClass),
 
       /*ListView.separated(
         padding: EdgeInsets.all(80),
