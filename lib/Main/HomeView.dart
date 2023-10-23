@@ -5,6 +5,7 @@ import 'package:kyty/KTPaddingText/BottomMenu.dart';
 import 'package:kyty/KTPaddingText/DrawerClass.dart';
 import 'package:kyty/KTPaddingText/GridBuilderCell.dart';
 import 'package:kyty/KTPaddingText/PostCellView.dart';
+import 'package:kyty/Singletone/DataHolder.dart';
 
 import '../FirestoreObjects/FbPost.dart';
 import '../OnBoarding/LoginView.dart';
@@ -31,8 +32,6 @@ class _HomeViewState extends State<HomeView>{
   void eventoDrawerClass(int indice){
     if (indice == 0){
       FirebaseAuth.instance.signOut();
-      //Navigator.of(context).pop();
-      //Navigator.of(context).popAndPushNamed('/loginview');
       Navigator.of(context).pushAndRemoveUntil (
         MaterialPageRoute (builder: (BuildContext context) => LoginView()),
         ModalRoute.withName('/loginview'),
@@ -65,10 +64,19 @@ class _HomeViewState extends State<HomeView>{
     }
   }
 
+  void onItemListaClicked(int index){
+    DataHolder().selectedPost = post[index];
+    Navigator.of(context).pushNamed('/postview');
+    print("El elemento de la lista que acaba de tocarse es el " + index.toString());
+  }
+
   Widget? creadorDeItemLista(BuildContext context, int index){
     return PostCellView(sText: post[index].titulo,
         dFontSize: 20,
-        mcColores: Colors.red);
+        mcColores: Colors.blueGrey,
+        iPosicion: index,
+        onItemListaClickedFunction: onItemListaClicked,
+    );
   }
 
   Widget creadorDeSeparadorLista(BuildContext context, int index){
