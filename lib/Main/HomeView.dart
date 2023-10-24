@@ -17,7 +17,7 @@ class HomeView extends StatefulWidget{
 }
 
 class _HomeViewState extends State<HomeView>{
-  bool bIsList = false;
+  bool bIsList = true;
   void onBottomMenuPressed(int indice) {
     setState(() {
       if (indice == 0){
@@ -84,7 +84,11 @@ class _HomeViewState extends State<HomeView>{
   }
 
   Widget creadorCeldas(BuildContext context, int index){
-    return GridBuilderCell(post: post);
+    return GridBuilderCell(
+        post: post,
+        iPosicion: index,
+        onItemListaClickedFunction: onItemListaClicked,
+    );
   }
 
   
@@ -117,6 +121,13 @@ class _HomeViewState extends State<HomeView>{
       bottomNavigationBar: BottomMenu(events: onBottomMenuPressed),
 
       drawer: DrawerClass(onItemTap: eventoDrawerClass),
+
+      floatingActionButton:FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed("/postcreateview");
+        },
+        child: Icon(Icons.add),
+      ),
 
       /*ListView.separated(
         padding: EdgeInsets.all(80),

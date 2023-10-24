@@ -13,7 +13,7 @@ class PostView extends StatelessWidget{
         children: [
           Text(DataHolder().selectedPost.titulo),
           Text(DataHolder().selectedPost.cuerpo),
-          Image.network("img"),
+          Image.asset("resources/logo_kyty.png", width: 100, height: 100),
           TextButton(onPressed: null, child: Text("Like"))
         ],
 
