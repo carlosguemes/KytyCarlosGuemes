@@ -22,19 +22,23 @@ class PostCreateView extends StatelessWidget{
           PaddingClass(controlador: tecTitulo, labelText: "Escribe el título", esContrasenya: false),
           PaddingClass(controlador: tecCuerpo, labelText: "Escribe el cuerpo", esContrasenya: false),
           Image.asset("resources/logo_kyty.png", width: 100, height: 100),
-          TextButton(onPressed: () {
-            FbPost postNuevo = new FbPost(titulo: tecTitulo.text, cuerpo: tecCuerpo.text);
+          Row(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(onPressed: () {
+                FbPost postNuevo = new FbPost(titulo: tecTitulo.text, cuerpo: tecCuerpo.text);
 
-            CollectionReference<FbPost> reference = db
-                .collection("Posts")
-                .withConverter(fromFirestore: FbPost.fromFirestore,
-                toFirestore: (FbPost post, _) => post.toFirestore());
+                DataHolder().crearPostEnFB(postNuevo);
 
-            reference.add(postNuevo);
+                Navigator.of(context).pushNamed('/homeview');
 
-            Navigator.of(context).pushNamed('/homeview');
+              }, child: Text("Postear")),
 
-          }, child: Text("Postear"))
+              TextButton(onPressed: () {
+                Navigator.of(context).pushNamed('/homeview');
+
+              }, child: Text("Cancelar"))
+            ],
+          ),
         ],
       ),
     );

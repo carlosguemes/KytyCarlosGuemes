@@ -37,7 +37,6 @@ class GridBuilderCell extends StatelessWidget{
             ),
             onTap: () {
               onItemListaClickedFunction!(index);
-              print("Callate manin " + iPosicion.toString());
             },
           );
         },

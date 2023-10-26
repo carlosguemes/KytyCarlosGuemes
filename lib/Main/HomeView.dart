@@ -17,7 +17,7 @@ class HomeView extends StatefulWidget{
 }
 
 class _HomeViewState extends State<HomeView>{
-  bool bIsList = true;
+  bool bIsList = false;
   void onBottomMenuPressed(int indice) {
     setState(() {
       if (indice == 0){
