@@ -1,8 +1,31 @@
 import 'package:flutter/material.dart';
 
+import '../FirestoreObjects/FbPost.dart';
 import '../Singletone/DataHolder.dart';
 
-class PostView extends StatelessWidget{
+class PostView extends StatefulWidget{
+  @override
+  State<PostView> createState() => _PostViewState();
+}
+
+class _PostViewState extends State<PostView> {
+
+  late FbPost selectedPost;
+
+  @override
+  void initState() async {
+    // TODO: implement initState
+    super.initState();
+
+    selectedPost = await DataHolder().initCachedFbPost();
+  }
+
+  void loadData() async{
+    setState(() async {
+      selectedPost = await DataHolder().initCachedFbPost();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -21,6 +44,4 @@ class PostView extends StatelessWidget{
     );
 
   }
-
-
 }

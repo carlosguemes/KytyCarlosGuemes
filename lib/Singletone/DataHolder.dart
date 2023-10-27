@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,7 +14,13 @@ class DataHolder{
   late FbPost selectedPost;
 
   DataHolder._internal(){
+    initCachedFbPost();
+  }
+
+  void initDataHolder(){
+    /*print("DataHolder Constructor");
     sNombrePost = "Titulo de post";
+    initCachedFbPost();*/
   }
 
   factory DataHolder(){
@@ -28,7 +36,15 @@ class DataHolder{
     reference.add(post);
   }
 
-  void initCachedFbPost() async{
+  void saveSelectedPostInCache() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('titulo', selectedPost.titulo);
+    prefs.setString('cuerpo', selectedPost.cuerpo);
+  }
+
+  Future<FbPost> initCachedFbPost() async{
+    //selectedPost = FbPost(titulo: "", cuerpo: "");
+    if (selectedPost!=null) return selectedPost;
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String? titulo = prefs.getString('titulo');
@@ -37,7 +53,9 @@ class DataHolder{
     String? cuerpo = prefs.getString('cuerpo');
     cuerpo??="";
 
-    selectedPost = FbPost(titulo: titulo, cuerpo: cuerpo);
+    print("SHARED PREFERENCES ---> "+ titulo);
+    selectedPost=FbPost(titulo: titulo, cuerpo: cuerpo);
+    return selectedPost;
   }
 
 }
