@@ -3,15 +3,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../FirestoreObjects/FbPost.dart';
 import 'FirebaseAdmin.dart';
+import 'GeolocAdmin.dart';
 
 class DataHolder{
   static final DataHolder _dataHolder = new DataHolder._internal();
-  FirebaseFirestore db = FirebaseFirestore.instance;
 
   String sNombre = "Kyty";
   late String sNombrePost;
   FbPost? selectedPost;
   FirebaseAdmin fbadmin = FirebaseAdmin();
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  GeolocAdmin geolocAdmin = GeolocAdmin();
 
   DataHolder._internal(){
     initCachedFbPost();

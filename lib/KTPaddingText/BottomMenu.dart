@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kyty/Interfaces/BottomMenuEvents.dart';
 
 class BottomMenu extends StatelessWidget {
   Function (int indice)? events;
