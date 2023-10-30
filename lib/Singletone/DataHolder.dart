@@ -1,9 +1,8 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../FirestoreObjects/FbPost.dart';
+import 'FirebaseAdmin.dart';
 
 class DataHolder{
   static final DataHolder _dataHolder = new DataHolder._internal();
@@ -11,7 +10,8 @@ class DataHolder{
 
   String sNombre = "Kyty";
   late String sNombrePost;
-  late FbPost selectedPost;
+  FbPost? selectedPost;
+  FirebaseAdmin fbadmin = FirebaseAdmin();
 
   DataHolder._internal(){
     initCachedFbPost();
@@ -37,13 +37,14 @@ class DataHolder{
   }
 
   void saveSelectedPostInCache() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('titulo', selectedPost.titulo);
-    prefs.setString('cuerpo', selectedPost.cuerpo);
+    if (selectedPost!=null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('titulo', selectedPost!.titulo);
+      prefs.setString('cuerpo', selectedPost!.cuerpo);
+    }
   }
 
-  Future<FbPost> initCachedFbPost() async{
-    //selectedPost = FbPost(titulo: "", cuerpo: "");
+  Future<FbPost?> initCachedFbPost() async{
     if (selectedPost!=null) return selectedPost;
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -55,6 +56,7 @@ class DataHolder{
 
     print("SHARED PREFERENCES ---> "+ titulo);
     selectedPost=FbPost(titulo: titulo, cuerpo: cuerpo);
+
     return selectedPost;
   }
 

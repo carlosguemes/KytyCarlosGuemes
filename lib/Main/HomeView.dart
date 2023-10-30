@@ -61,6 +61,8 @@ class _HomeViewState extends State<HomeView>{
         post.add(querySnap.docs[i].data());
       });
 
+      DataHolder().fbadmin.holaMundo();
+
     }
   }
 
@@ -68,7 +70,7 @@ class _HomeViewState extends State<HomeView>{
     DataHolder().selectedPost = post[index];
     DataHolder().saveSelectedPostInCache();
     Navigator.of(context).pushNamed('/postview');
-    print("El elemento de la lista que acaba de tocarse es el " + index.toString());
+    //print("El elemento de la lista que acaba de tocarse es el " + index.toString());
   }
 
   Widget? creadorDeItemLista(BuildContext context, int index){

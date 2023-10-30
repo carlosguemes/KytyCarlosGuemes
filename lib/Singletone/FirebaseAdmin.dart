@@ -1,0 +1,5 @@
+class FirebaseAdmin{
+  void holaMundo(){
+
+  }
+}
