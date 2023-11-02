@@ -11,11 +11,13 @@ class PhoneLoginView extends StatefulWidget{
 class _PhoneLoginViewState extends State<PhoneLoginView> {
   TextEditingController tecPhone = TextEditingController();
   TextEditingController tecVerify = TextEditingController();
+  String sVerificationCode ="";
+  bool blMostrarVerificacion = false;
 
-  void enviarTelefonoPressed(){
+  void enviarTelefonoPressed() async{
     String sTelefono = tecPhone.text;
-    FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: '+44 7123 123 456',
+
+    await FirebaseAuth.instance.verifyPhoneNumber(
       verificationCompleted: verificacionCompletada,
       verificationFailed: verificacionFallida,
       codeSent: codeSent,
@@ -23,20 +25,33 @@ class _PhoneLoginViewState extends State<PhoneLoginView> {
     );
   }
 
-  void enviarVerifyPressed(){
+  void enviarVerifyPressed() async{
+    String smsCode = tecVerify.text;
 
+    // Create a PhoneAuthCredential with the code
+    PhoneAuthCredential credential =
+    PhoneAuthProvider.credential(verificationId: sVerificationCode, smsCode: smsCode);
+
+    // Sign the user in (or link) with the credential
+    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  void verificacionCompletada(PhoneAuthCredential credencial){
-
+  void verificacionCompletada(PhoneAuthCredential credencial) async{
+    await FirebaseAuth.instance.signInWithCredential(credencial);
+    Navigator.of(context).popAndPushNamed('/homeview');
   }
 
   void verificacionFallida(FirebaseAuthException credencial){
-
+    if (credencial.code == 'invalid-phone-number') {
+      print('The provided phone number is not valid.');
+    }
   }
 
-  void codeSent(String sCadena, int? iNumero){
-
+  void codeSent(String codigo, int? iNumero) async{
+    sVerificationCode = codigo;
+    setState(() {
+      blMostrarVerificacion = true;
+    });
   }
 
   void codeAutoRetrievalTimeout(String sCadena){
@@ -51,8 +66,10 @@ class _PhoneLoginViewState extends State<PhoneLoginView> {
         children: [
           PaddingClass(controlador: tecPhone, esContrasenya: false, labelText: "Número de teléfono"),
           TextButton(onPressed: enviarTelefonoPressed, child: Text("Enviar Teléfono")),
-          PaddingClass(controlador: tecVerify, esContrasenya: false, labelText: "Número Verificación"),
-          TextButton(onPressed: enviarVerifyPressed, child: Text("Enviar Verificación")),
+          if (blMostrarVerificacion)
+            PaddingClass(controlador: tecVerify, esContrasenya: false, labelText: "Número Verificación"),
+          if (blMostrarVerificacion)
+            TextButton(onPressed: enviarVerifyPressed, child: Text("Enviar Verificación")),
         ],
       )
     );
