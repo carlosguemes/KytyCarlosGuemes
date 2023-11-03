@@ -9,7 +9,7 @@ class PostView extends StatefulWidget{
 }
 
 class _PostViewState extends State<PostView> {
-  FbPost _datosPost = FbPost(titulo: "titulo", cuerpo: "cuerpo");
+  FbPost _datosPost = FbPost(titulo: "titulo", cuerpo: "cuerpo", imagen: "imagen");
 
   @override
   void initState(){
@@ -36,7 +36,7 @@ class _PostViewState extends State<PostView> {
         children: [
           Text(_datosPost.titulo),
           Text(_datosPost.cuerpo),
-          Image.asset("resources/logo_kyty.png", width: 100, height: 100),
+          Image.asset(_datosPost.imagen, width: 100, height: 100),
           TextButton(onPressed: null, child: Text("Like"))
         ],
 

@@ -42,7 +42,7 @@ class KytyApp extends StatelessWidget{
           '/postview':(context) => PostView(),
           '/postcreateview':(context) => PostCreateView(),
         },
-        initialRoute: '/loginview',
+        initialRoute: '/homeview',
       );
     }
 
