@@ -36,7 +36,7 @@ class _PostViewState extends State<PostView> {
         children: [
           Text(_datosPost.titulo),
           Text(_datosPost.cuerpo),
-          Image.asset(_datosPost.imagen, width: 100, height: 100),
+          Image.network(_datosPost.imagen, width: 100, height: 100),
           TextButton(onPressed: null, child: Text("Like"))
         ],
 
