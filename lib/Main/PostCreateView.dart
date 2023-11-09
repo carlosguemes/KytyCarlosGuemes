@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,16 +38,44 @@ class _PostCreateViewState extends State<PostCreateView> {
     }
   }
 
-  void subirImagen() async{
+  void subirPost() async{
     final storageRef = FirebaseStorage.instance.ref();
 
-    final rutaAFicheroEnNube = storageRef.child("mountains.jpg");
+    String rutaEnNube="posts/" +
+        FirebaseAuth.instance.currentUser!.uid+"/imgs/" +
+        DateTime.now().millisecondsSinceEpoch.toString();
+    final rutaAFicheroEnNube = storageRef.child(rutaEnNube);
+    final metadata = SettableMetadata(contentType: "image/jpeg");
 
+    //------------INICIO DE SUBIR IMAGEN--------------//
     try{
-      await rutaAFicheroEnNube.putFile(_imagePreview);
+      await rutaAFicheroEnNube.putFile(_imagePreview, metadata);
     } on FirebaseException catch (o){
-
+      print("ERROR AL SUBIR LA IMAGEN: " + o.toString());
     }
+    print("Se ha subido la imagen");
+
+
+    String imgUrl = await rutaAFicheroEnNube.getDownloadURL();
+
+    print("Se ha subido la imagen " + imgUrl);
+
+    //------------FIN DE SUBIR IMAGEN--------------//
+
+    //------------INICIO DE SUBIR POST--------------//
+
+    FbPost postNuevo = new FbPost(
+        titulo: tecTitulo.text,
+        cuerpo: tecCuerpo.text,
+        imagen: imgUrl
+    );
+
+    DataHolder().crearPostEnFB(postNuevo);
+
+    //------------FIN DE SUBIR POST--------------//
+
+    Navigator.of(context).pushNamed('/homeview');
+
   }
 
   @override
@@ -72,14 +101,7 @@ class _PostCreateViewState extends State<PostCreateView> {
           Row(mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(onPressed: () {
-                subirImagen();
-                /*
-                FbPost postNuevo = new FbPost(titulo: tecTitulo.text, cuerpo: tecCuerpo.text, imagen: "NaN");
-
-                DataHolder().crearPostEnFB(postNuevo);
-
-                Navigator.of(context).pushNamed('/homeview');*/
-
+                subirPost();
               }, child: Text("Postear")),
 
             ],
