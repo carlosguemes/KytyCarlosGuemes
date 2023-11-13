@@ -117,7 +117,13 @@ class _HomeViewState extends State<HomeView>{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text("Kyty"),),
+      appBar: AppBar(title: Text("Kyty"), actions: [
+        IconButton(
+          icon: const Icon (Icons.refresh),
+          tooltip: 'Refrescar lista',
+          onPressed: descargarPosts
+          ,),
+      ],),
       body: Center(
         child: celdasOLista(bIsList),
       ),

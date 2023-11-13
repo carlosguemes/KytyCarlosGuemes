@@ -100,10 +100,7 @@ class _PostCreateViewState extends State<PostCreateView> {
 
           Row(mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(onPressed: () {
-                subirPost();
-              }, child: Text("Postear")),
-
+              TextButton(onPressed: subirPost, child: Text("Postear")),
             ],
           ),
         ],

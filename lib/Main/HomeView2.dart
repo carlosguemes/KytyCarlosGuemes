@@ -18,7 +18,11 @@ class HomeView2 extends StatefulWidget{
 }
 
 class _HomeViewState2 extends State<HomeView2>{
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final List<FbPost> post = [];
   bool bIsList = false;
+  Map<String, FbPost> mapPosts = Map();
+
   void onBottomMenuPressed(int indice) {
     setState(() {
       if (indice == 0){
@@ -41,15 +45,11 @@ class _HomeViewState2 extends State<HomeView2>{
   }
 
 
-  FirebaseFirestore db = FirebaseFirestore.instance;
-  final List<FbPost> post = [];
-
   @override
   void initState() {
     descargarPosts();
     super.initState();
     loadGeoLocator();
-
   }
 
   void loadGeoLocator() async {
@@ -58,7 +58,8 @@ class _HomeViewState2 extends State<HomeView2>{
     DataHolder().geolocAdmin.registrarCambiosLoc();
   }
 
-  void descargarPosts() async{
+  void descargarPostsOld() async{
+    post.clear();
     CollectionReference<FbPost> reference = db
         .collection("Posts")
         .withConverter(fromFirestore: FbPost.fromFirestore,
@@ -69,10 +70,40 @@ class _HomeViewState2 extends State<HomeView2>{
       setState(() {
         post.add(querySnap.docs[i].data());
       });
-
-      DataHolder().fbadmin.holaMundo();
-
     }
+  }
+
+  void descargarPosts() async{
+    CollectionReference<FbPost> reference = db
+        .collection("Posts")
+        .withConverter(fromFirestore: FbPost.fromFirestore,
+        toFirestore: (FbPost post, _) => post.toFirestore());
+
+    reference.snapshots().listen(datosDescargados, onError: datosDescargaPostError);
+    }
+
+  void datosDescargados(QuerySnapshot<FbPost> posts) {
+    for (int i = 0; i < posts.docChanges.length; i++) {
+        FbPost temp = posts.docChanges[i].doc.data()!;
+        mapPosts[posts.docChanges[i].doc.id] = temp;
+
+      setState(() {
+        post.clear();
+        post.addAll(mapPosts.values);
+      });
+    }
+/*
+    post.clear();
+    for (int i = 0; i < posts.docs.length; i++) {
+      setState(() {
+        post.add(posts.docs[i].data());
+      });
+    }
+    */
+  }
+
+  void datosDescargaPostError(error){
+    print("Listen failed: $error");
   }
 
   void onItemListaClicked(int index){
