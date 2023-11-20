@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:kyty/Singletone/HttpAdmin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../FirestoreObjects/FbPost.dart';
@@ -17,6 +18,7 @@ class DataHolder{
   FirebaseFirestore db = FirebaseFirestore.instance;
   GeolocAdmin geolocAdmin = GeolocAdmin();
   late PlatformAdmin platformAdmin;
+  HttpAdmin httpAdmin = HttpAdmin();
 
   DataHolder._internal(){
     initCachedFbPost();

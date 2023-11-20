@@ -50,6 +50,7 @@ class _HomeViewState2 extends State<HomeView2>{
     descargarPosts();
     super.initState();
     loadGeoLocator();
+    DataHolder().httpAdmin.pedirTemperaturasEn(40.43, -3.53);
   }
 
   void loadGeoLocator() async {

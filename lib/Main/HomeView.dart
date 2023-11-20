@@ -47,6 +47,7 @@ class _HomeViewState extends State<HomeView>{
   void initState() {
     descargarPosts();
     super.initState();
+    DataHolder().httpAdmin.pedirTemperaturasEn(40.43, -3.53);
   }
 
   void descargarPosts() async{
