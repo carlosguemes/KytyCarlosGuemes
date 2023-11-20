@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kyty/FirestoreObjects/FbUsuario.dart';
 
+import '../Singletone/DataHolder.dart';
+
 class SplashView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -59,13 +61,33 @@ class _SplashViewState extends State<SplashView>{
   Widget build(BuildContext context) {
     // TODO: implement build
 
-    Column column = Column(
+    return Stack(
+        children: [
+          Positioned(
+            left: DataHolder().platformAdmin.getScreenWidth()*0.1,
+            top: DataHolder().platformAdmin.getScreenHeight()*0.1,
+            width: DataHolder().platformAdmin.getScreenWidth()*0.8,
+            height: DataHolder().platformAdmin.getScreenHeight()*0.8,
+            child: Image.asset("resources/logo_kyty.png",),
+          ),
+          Positioned(
+            left: DataHolder().platformAdmin.getScreenWidth()*0.35,
+            top: DataHolder().platformAdmin.getScreenHeight()*0.1,
+            width: DataHolder().platformAdmin.getScreenWidth()*0.3,
+            height: DataHolder().platformAdmin.getScreenWidth()*0.3,
+            child: CircularProgressIndicator()
+          ),
+        ]
+    );
+
+
+    /*Column column = Column(
         children: [
           Image.asset("resources/logo_kyty.png", width: 300, height: 300, fit: BoxFit.fill,),
           Padding(padding: EdgeInsets.symmetric(vertical: 30)),
           CircularProgressIndicator(),
         ]
     );
-    return column;
+    return column;*/
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kyty/Singletone/DataHolder.dart';
 
 class PostCellView extends StatelessWidget {
 
@@ -33,8 +34,9 @@ class PostCellView extends StatelessWidget {
           color: mcColores,
           child: Row(
             children: [
-              Image.asset("resources/logo_kyty.png", width: 70,
-                  height: 70),
+              Image.asset("resources/logo_kyty.png",
+                  width: DataHolder().platformAdmin.getScreenWidth()*0.2,
+                  height: DataHolder().platformAdmin.getScreenHeight()*0.1),
               Text(sText, style: TextStyle(fontSize: dFontSize)),
               TextButton(onPressed: null,
                   child: Text("+", style: TextStyle(fontSize: dFontSize)))

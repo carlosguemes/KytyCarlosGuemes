@@ -9,12 +9,14 @@ import 'Main/HomeView2.dart';
 import 'Main/PostView.dart';
 import 'OnBoarding/LoginView.dart';
 import 'OnBoarding/RegisterView.dart';
+import 'Singletone/DataHolder.dart';
 
 class KytyApp extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    DataHolder().initPlatformAdmin(context);
+    // TODO: implement build;
 
     MaterialApp materialApp;
     if (kIsWeb){
@@ -42,7 +44,7 @@ class KytyApp extends StatelessWidget{
           '/postview':(context) => PostView(),
           '/postcreateview':(context) => PostCreateView(),
         },
-        initialRoute: '/homeview',
+        initialRoute: '/splashview',
       );
     }
 
