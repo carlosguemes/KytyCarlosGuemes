@@ -69,8 +69,6 @@ class _HomeViewState extends State<HomeView>{
         post.add(querySnap.docs[i].data());
       });
 
-      DataHolder().fbadmin.holaMundo();
-
     }
   }
 

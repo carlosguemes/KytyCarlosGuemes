@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kyty/Singletone/HttpAdmin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../FirestoreObjects/FbPost.dart';
+import '../FirestoreObjects/FbUsuario.dart';
 import 'FirebaseAdmin.dart';
 import 'GeolocAdmin.dart';
 import 'PlatformAdmin.dart';
@@ -19,6 +21,7 @@ class DataHolder{
   GeolocAdmin geolocAdmin = GeolocAdmin();
   late PlatformAdmin platformAdmin;
   HttpAdmin httpAdmin = HttpAdmin();
+  late FbUsuario usuario;
 
   DataHolder._internal(){
     initCachedFbPost();
@@ -68,10 +71,24 @@ class DataHolder{
     String? imagen = prefs.getString('imagen');
     imagen??="";
 
-    print("SHARED PREFERENCES ---> "+ titulo);
+    //print("SHARED PREFERENCES ---> "+ titulo);
     selectedPost=FbPost(titulo: titulo, cuerpo: cuerpo, imagen: imagen);
 
     return selectedPost;
+  }
+
+  Future <FbUsuario> loadFbUsuario() async {
+    String uidUsuario = FirebaseAuth.instance.currentUser!.uid;
+
+    DocumentReference<FbUsuario> reference = db
+        .collection("Usuarios")
+        .doc(uidUsuario)
+        .withConverter(fromFirestore: FbUsuario.fromFirestore,
+        toFirestore: (FbUsuario usuario, _) => usuario.toFirestore());
+
+    DocumentSnapshot<FbUsuario> docSnap = await reference.get();
+    usuario = docSnap.data()!;
+    return usuario;
   }
 
 }
