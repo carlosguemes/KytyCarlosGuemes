@@ -5,7 +5,7 @@ class HttpAdmin{
 
   HttpAdmin();
 
-  void pedirTemperaturasEn(double lat, double lon) async{
+  Future<double> pedirTemperaturasEn(double lat, double lon) async{
     var url = Uri.https('api.open-meteo.com', '/v1/forecast',
         {
           'latitude': lat.toString(),
@@ -19,7 +19,7 @@ class HttpAdmin{
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
 
-      print("\nMAPA ENTERO: " + jsonResponse.toString());
+      //print("\nMAPA ENTERO: " + jsonResponse.toString());
       var horas = jsonResponse['hourly_units'];
       print("\nUNIDAD HORARIA: " + horas.toString());
 
@@ -30,8 +30,14 @@ class HttpAdmin{
       print("\nTIEMPO: " + jsonHourly['time'].toString());
       //var itemCount = jsonResponse['totalItems'];
       //print('Number of books about http: $itemCount.');
+
+      DateTime now = DateTime.now();
+      int hora = now.hour;
+
+      return jsonHourly['temperature_2m'][hora];
     } else {
       print('Request failed with status: ${response.statusCode}.');
+      return 0;
     }
   }
 
