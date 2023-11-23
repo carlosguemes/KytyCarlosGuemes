@@ -81,10 +81,10 @@ class _HomeViewState extends State<HomeView>{
 
   Widget? creadorDeItemLista(BuildContext context, int index){
     return PostCellView(sText: post[index].titulo,
-        dFontSize: 20,
-        mcColores: Colors.blueGrey,
-        iPosicion: index,
-        onItemListaClickedFunction: onItemListaClicked,
+      dFontSize: 20,
+      mcColores: Colors.blueGrey,
+      iPosicion: index,
+      onItemListaClickedFunction: onItemListaClicked,
     );
   }
 
@@ -94,27 +94,27 @@ class _HomeViewState extends State<HomeView>{
 
   Widget creadorCeldas(BuildContext context, int index){
     return GridBuilderCell(
-        post: post,
-        iPosicion: index,
-        onItemListaClickedFunction: onItemListaClicked,
+      post: post,
+      iPosicion: index,
+      onItemListaClickedFunction: onItemListaClicked,
     );
   }
 
-  
+
   Widget celdasOLista(bool isList) {
     if (isList) {
       return ListView.separated(
-          padding: EdgeInsets.all(8),
-          itemCount: post.length,
-          itemBuilder: creadorDeItemLista,
-          separatorBuilder: creadorDeSeparadorLista,
-        );
+        padding: EdgeInsets.all(8),
+        itemCount: post.length,
+        itemBuilder: creadorDeItemLista,
+        separatorBuilder: creadorDeSeparadorLista,
+      );
     } else {
       return /*GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
             itemCount: post.length,
             itemBuilder: creadorCeldas*/
-      creadorCeldas(context, post.length);
+        creadorCeldas(context, post.length);
     }
   }
 
@@ -149,7 +149,7 @@ class _HomeViewState extends State<HomeView>{
         itemCount: post.length,
         itemBuilder: creadorDeItemLista,
         separatorBuilder: creadorDeSeparadorLista,*/
-      );
+    );
   }
 
 
