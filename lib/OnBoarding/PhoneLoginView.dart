@@ -18,6 +18,7 @@ class _PhoneLoginViewState extends State<PhoneLoginView> {
     String sTelefono = tecPhone.text;
 
     await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: sTelefono,
       verificationCompleted: verificacionCompletada,
       verificationFailed: verificacionFallida,
       codeSent: codeSent,
@@ -34,6 +35,8 @@ class _PhoneLoginViewState extends State<PhoneLoginView> {
 
     // Sign the user in (or link) with the credential
     await FirebaseAuth.instance.signInWithCredential(credential);
+
+    Navigator.of(context).popAndPushNamed('/homeview');
   }
 
   void verificacionCompletada(PhoneAuthCredential credencial) async{

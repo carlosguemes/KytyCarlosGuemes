@@ -50,13 +50,12 @@ class _HomeViewState2 extends State<HomeView2>{
     descargarPosts();
     super.initState();
     loadGeoLocator();
-    DataHolder().httpAdmin.pedirTemperaturasEn(40.43, -3.53);
+    DataHolder().subscribeACambiosGPSUsuario();
   }
 
   void loadGeoLocator() async {
     Position pos = await DataHolder().geolocAdmin.determinePosition();
     print("-----------> Coordenadas: " + pos.toString());
-    DataHolder().geolocAdmin.registrarCambiosLoc();
   }
 
   void descargarPostsOld() async{

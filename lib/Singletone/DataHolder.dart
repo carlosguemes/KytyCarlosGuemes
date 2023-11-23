@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:kyty/Singletone/HttpAdmin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -89,6 +90,15 @@ class DataHolder{
     DocumentSnapshot<FbUsuario> docSnap = await reference.get();
     usuario = docSnap.data()!;
     return usuario;
+  }
+
+  void subscribeACambiosGPSUsuario(){
+    geolocAdmin.registrarCambiosLoc(posicionDelMovilCambio);
+    fbadmin.actualizarPerfilusuario(usuario);
+  }
+
+  void posicionDelMovilCambio(Position? posicion){
+    usuario.geoloc=GeoPoint(posicion!.latitude, posicion!.longitude);
   }
 
 }
