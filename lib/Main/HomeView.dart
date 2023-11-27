@@ -46,8 +46,8 @@ class _HomeViewState extends State<HomeView>{
 
   @override
   void initState() {
-    descargarPosts();
     super.initState();
+    descargarPosts();
     determinarTemperaturaLocal();
   }
 

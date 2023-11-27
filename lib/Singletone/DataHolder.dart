@@ -94,11 +94,11 @@ class DataHolder{
 
   void subscribeACambiosGPSUsuario(){
     geolocAdmin.registrarCambiosLoc(posicionDelMovilCambio);
-    fbadmin.actualizarPerfilusuario(usuario);
   }
 
   void posicionDelMovilCambio(Position? posicion){
     usuario.geoloc=GeoPoint(posicion!.latitude, posicion!.longitude);
+    fbadmin.actualizarPerfilusuario(usuario);
   }
 
 }

@@ -47,10 +47,17 @@ class _HomeViewState2 extends State<HomeView2>{
 
   @override
   void initState() {
-    descargarPosts();
     super.initState();
+    descargarPosts();
     loadGeoLocator();
     DataHolder().subscribeACambiosGPSUsuario();
+    determinarTemperaturaLocal();
+  }
+
+  void determinarTemperaturaLocal() async{
+    Position position = await DataHolder().geolocAdmin.determinePosition();
+    double valor = await DataHolder().httpAdmin.pedirTemperaturasEn(position.latitude, position.longitude);
+    print("La temperatura en el sitio donde estás es de: " + valor.toString());
   }
 
   void loadGeoLocator() async {
