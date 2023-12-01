@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:kyty/FirestoreObjects/FbUsuario.dart';
+
+import '../Singletone/DataHolder.dart';
 
 class PerfilView extends StatelessWidget{
 
@@ -12,14 +15,15 @@ class PerfilView extends StatelessWidget{
 
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  void onClickAceptar(){
+  void onClickAceptar() async{
+    Position pos = await DataHolder().geolocAdmin.determinePosition();
 
     FbUsuario usuario = FbUsuario(nombre: tecUsername.text,
-        edad: int.parse(tecEdad.text), altura: 0, colorPelo: "Rubio", geoloc: GeoPoint(0,0));
+        edad: int.parse(tecEdad.text), altura: 0, colorPelo: "Rubio", geoloc: GeoPoint(pos.latitude,pos.longitude));
 
     String uidUsuario = FirebaseAuth.instance.currentUser!.uid;
 
-    db.collection("Usuarios").doc(uidUsuario).set(usuario.toFirestore());
+    await db.collection("Usuarios").doc(uidUsuario).set(usuario.toFirestore());
 
     Navigator.of(_context).popAndPushNamed('/homeview');
   }

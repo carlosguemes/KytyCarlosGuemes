@@ -22,7 +22,7 @@ class DataHolder{
   GeolocAdmin geolocAdmin = GeolocAdmin();
   late PlatformAdmin platformAdmin;
   HttpAdmin httpAdmin = HttpAdmin();
-  late FbUsuario usuario;
+  FbUsuario? usuario;
 
   DataHolder._internal(){
     initCachedFbPost();
@@ -89,7 +89,7 @@ class DataHolder{
 
     DocumentSnapshot<FbUsuario> docSnap = await reference.get();
     usuario = docSnap.data()!;
-    return usuario;
+    return usuario!;
   }
 
   void subscribeACambiosGPSUsuario(){
@@ -97,8 +97,8 @@ class DataHolder{
   }
 
   void posicionDelMovilCambio(Position? posicion){
-    usuario.geoloc=GeoPoint(posicion!.latitude, posicion!.longitude);
-    fbadmin.actualizarPerfilusuario(usuario);
+    usuario!.geoloc=GeoPoint(posicion!.latitude, posicion!.longitude);
+    fbadmin.actualizarPerfilusuario(usuario!);
   }
 
 }
